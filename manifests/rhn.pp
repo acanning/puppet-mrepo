@@ -36,6 +36,7 @@ class mrepo::rhn {
     # CentOS does not have redhat network specific configuration files by default
     if $::operatingsystem == 'CentOS' or $rhn_config == true {
 
+      # Added case statement to enable different RHN access for RHEL 7
       case $::operatingsystemmajrelease {
         '7': {
           exec { 'subscription-manager':
