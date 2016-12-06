@@ -61,35 +61,41 @@ define mrepo::repo::rhn (
     }
   }
 
-  if $ensure == 'present' and $gen_env {
-    exec { "Generate systemid ${name} - ${arch}":
-      command     => $sysid_command,
-      path        => [ '/bin', '/usr/bin' ],
-      user        => $user,
-      group       => $group,
-      creates     => "${src_root}/${name}/systemid",
-      require     => [
-        Class['mrepo::package'],
-        Class['mrepo::rhn'],
-      ],
-      before      => Exec["Generate mrepo repo ${name}"],
-      logoutput   => on_failure,
-      environment => $gen_env,
-    }
-  }
-  elsif $ensure == 'present' {
-    exec { "Generate systemid ${name} - ${arch}":
-      command   => $sysid_command,
-      path      => [ '/bin', '/usr/bin' ],
-      user      => $user,
-      group     => $group,
-      creates   => "${src_root}/${name}/systemid",
-      require   => [
-        Class['mrepo::package'],
-        Class['mrepo::rhn'],
-      ],
-      before    => Exec["Generate mrepo repo ${name}"],
-      logoutput => on_failure,
+  case $::operatingsystemmajrelease {
+    '7': {
+      }
+    default: {
+      if $ensure == 'present' and $gen_env {
+        exec { "Generate systemid ${name} - ${arch}":
+          command     => $sysid_command,
+          path        => [ '/bin', '/usr/bin' ],
+          user        => $user,
+          group       => $group,
+          creates     => "${src_root}/${name}/systemid",
+          require     => [
+            Class['mrepo::package'],
+            Class['mrepo::rhn'],
+          ],
+          before      => Exec["Generate mrepo repo ${name}"],
+          logoutput   => on_failure,
+          environment => $gen_env,
+        }
+      }
+      elsif $ensure == 'present' {
+        exec { "Generate systemid ${name} - ${arch}":
+          command   => $sysid_command,
+          path      => [ '/bin', '/usr/bin' ],
+          user      => $user,
+          group     => $group,
+          creates   => "${src_root}/${name}/systemid",
+          require   => [
+            Class['mrepo::package'],
+            Class['mrepo::rhn'],
+          ],
+          before    => Exec["Generate mrepo repo ${name}"],
+          logoutput => on_failure,
+        }
+      }
     }
   }
 }
