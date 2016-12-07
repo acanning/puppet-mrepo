@@ -40,7 +40,7 @@ class mrepo::rhn {
       case $::operatingsystemmajrelease {
         '7': {
           exec { 'subscription-manager':
-            command => "subscription-manager subscribe --username ${rhn_username} --password ${rhn_password} --auto-attach",
+            command => "subscription-manager register --username ${rhn_username} --password ${rhn_password} --auto-attach",
             path    => ['/bin', '/usr/bin', '/sbin', '/usr/sbin' ],
             unless  => 'subscription-manager status',
           }
