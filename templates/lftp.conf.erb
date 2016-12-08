@@ -1,0 +1,4 @@
+set ssl:ca-file "/etc/rhsm/ca/redhat-uep.pem"
+set ssl:key-file "/etc/pki/entitlement/<%= @rhnkey %>-key.pem"
+set ssl:cert-file "/etc/pki/entitlement/<%= @rhnkey %>.pem"
+set net:timeout 86400

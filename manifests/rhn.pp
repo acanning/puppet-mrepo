@@ -44,6 +44,16 @@ class mrepo::rhn {
             path    => ['/bin', '/usr/bin', '/sbin', '/usr/sbin' ],
             unless  => 'subscription-manager status',
           }
+
+          file { 'lftp.conf':
+            ensure  => 'file',
+            path    => '/etc/lftp.conf',
+            content => template("${module_name}/lftp.conf.erb"),
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0644',
+            require => Exec['subscription-manager'],
+          }
       }
         default: {
           file {
