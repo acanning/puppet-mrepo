@@ -189,10 +189,10 @@ define mrepo::repo (
 
       if $mrepo_env {
         validate_string($mrepo_env)
-        $repo_command = "${mrepo_env} ${mrepo_command} ${mrepo_options} ${name} ${mrepo_logging}"
+        $repo_command = "${mrepo_env} ${mrepo_command} ${mrepo_options} ${name} > ${mrepo_logging}"
       }
       else {
-        $repo_command = "${mrepo_command} ${mrepo_options} ${name} ${mrepo_logging}"
+        $repo_command = "${mrepo_command} ${mrepo_options} ${name} > ${mrepo_logging}"
       }
 
       case $update {
